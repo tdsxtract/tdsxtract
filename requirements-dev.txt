@@ -1,0 +1,13 @@
+pip 
+setuptools 
+wheel
+flake8
+pytest
+pytest-cov
+coverage
+black
+twine
+isort
+radon
+pydocstyle
+pylint
