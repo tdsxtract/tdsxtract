@@ -19,5 +19,6 @@ __doc__ = __description__
 
 from .helpers import *
 from .io import *
+from .models import *
 from .optim import *
 from .stack import *

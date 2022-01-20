@@ -4,6 +4,14 @@
    contain the root `toctree` directive.
 
 
+
+tdsxtract
+=========
+
+Tools for extracting permittivity values from Terahertz Time Domain Spectroscopy 
+measurements.
+
+
 Welcome! This is the documentation for tdsxtract |release|, last updated on |today|.
 
 
@@ -29,13 +37,8 @@ Welcome! This is the documentation for tdsxtract |release|, last updated on |tod
   :hidden:
   
   source/modules
+  idx
 
 
-
-
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
+  
+  

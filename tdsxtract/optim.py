@@ -37,12 +37,12 @@ def _fmini(
 ):
     unknown = "unknown"
     nl = len(wavelengths)
+    thickness = sample[unknown]["thickness"]
     if opt_thickness != None:
-        thickness = x[-1]
+        thickness *= x[-1]
         sample[unknown]["thickness"] = thickness
         x_ = x[:-1]
     else:
-        thickness = sample[unknown]["thickness"]
         x_ = x
     epsilon = x_[:nl] + 1j * x_[nl:]
     gamma = 2 * pi / wavelengths
@@ -106,10 +106,10 @@ def extract(
     eps_im_min = float(eps_im_min) if eps_im_min is not None else None
     eps_im_max = float(eps_im_max) if eps_im_max is not None else None
 
-    hmin, hmax = (1 - thickness_tol) * h, (1 + thickness_tol) * h
+    hmin, hmax = (1 - thickness_tol), (1 + thickness_tol)
     x0 = [eps_re0, eps_im0]
     if opt_thickness:
-        x0.append(h)
+        x0.append(1)
     initial_guess = npo.float64(npo.hstack(x0))
     bounds = [(eps_re_min, eps_re_max) for i in range(nl)]
     bounds += [(eps_im_min, eps_im_max) for i in range(nl)]
@@ -161,7 +161,7 @@ def extract(
         method="L-BFGS-B",
     )
     if opt_thickness:
-        h_opt = opt.x[-1]
+        h_opt = opt.x[-1] * h
         _epsopt = opt.x[:-1]
     else:
         h_opt = h

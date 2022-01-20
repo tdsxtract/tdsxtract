@@ -117,7 +117,15 @@ footer {
 
 .sphx-glr-download-link-note.admonition.note {
   visibility: hidden;
-  margin: -5em;
+  margin: -2.5em;
+}
+
+.wy-nav-top a {
+    color: #fff !important;
+    font-weight: 700;
+}
+.wy-nav-top {
+  background: #b5514c;
 }
 
 .highlight .k, .highlight .kc, .highlight .kn, .highlight .nb, .highlight .ow {
@@ -160,4 +168,8 @@ footer {
 
 a[class*='sphx-glr-backref-'] {
   color: inherit !important;
+}
+.wy-breadcrumbs li.wy-breadcrumbs-aside {
+    float: right;
+    font-size: small;
 }

@@ -47,6 +47,9 @@ else
 	@echo -e ">>> New virtualenv created. Activate with:\nworkon $(PROJECT_NAME)"
 endif
 
+version:
+	@echo $(VERSION)
+
 
 ## Test python environment is setup correctly
 testenv:

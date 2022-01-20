@@ -1,6 +1,6 @@
 from datetime import date
 
-__version__ = "0.0.1"
+__version__ = "0.1.0"
 __author__ = u"Benjamin Vial"
 __author_email__ = "b.vial@qmul.ac.uk"
 __copyright__ = u"Copyright (c) 2020-{}, {} <{}>".format(
