@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>tdsxtract package &mdash; tdsxtract 0.3.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../_static/sg_gallery.css?v=61a4c737" />
+      <link rel="stylesheet" type="text/css" href="../_static/sg_gallery-binder.css?v=f4aeca0c" />
+      <link rel="stylesheet" type="text/css" href="../_static/sg_gallery-dataframe.css?v=2082cf3c" />
+      <link rel="stylesheet" type="text/css" href="../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=67c5d18b" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=e259d695"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Indices and tables" href="../idx.html" />
+    <link rel="prev" title="tdsxtract" href="modules.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            tdsxtract
+              <img src="../_static/tdsxtract.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Quickstart</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../quickstart.html">Installation</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Examples</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../auto_examples/index.html">Examples</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API reference:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">tdsxtract</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">tdsxtract package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-tdsxtract.helpers">tdsxtract.helpers module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#tdsxtract.helpers.fft"><code class="docutils literal notranslate"><span class="pre">fft()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#tdsxtract.helpers.get_epsilon_estimate"><code class="docutils literal notranslate"><span class="pre">get_epsilon_estimate()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#tdsxtract.helpers.pos2time"><code class="docutils literal notranslate"><span class="pre">pos2time()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#tdsxtract.helpers.restrict"><code class="docutils literal notranslate"><span class="pre">restrict()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#tdsxtract.helpers.smooth"><code class="docutils literal notranslate"><span class="pre">smooth()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-tdsxtract.io">tdsxtract.io module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#tdsxtract.io.load"><code class="docutils literal notranslate"><span class="pre">load()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-tdsxtract.models">tdsxtract.models module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#tdsxtract.models.ColeCole"><code class="docutils literal notranslate"><span class="pre">ColeCole</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-tdsxtract.optim">tdsxtract.optim module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#tdsxtract.optim.extract"><code class="docutils literal notranslate"><span class="pre">extract()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#tdsxtract.optim.sample_transmission"><code class="docutils literal notranslate"><span class="pre">sample_transmission()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-tdsxtract.stack">tdsxtract.stack module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#tdsxtract.stack.get_coeffs_stack"><code class="docutils literal notranslate"><span class="pre">get_coeffs_stack()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#tdsxtract.stack.get_transmission"><code class="docutils literal notranslate"><span class="pre">get_transmission()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-tdsxtract">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../idx.html">Indices and tables</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">tdsxtract</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">tdsxtract</a></li>
+      <li class="breadcrumb-item active">tdsxtract package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/source/tdsxtract.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="tdsxtract-package">
+<h1>tdsxtract package<a class="headerlink" href="#tdsxtract-package" title="Link to this heading"></a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
+</section>
+<section id="module-tdsxtract.helpers">
+<span id="tdsxtract-helpers-module"></span><h2>tdsxtract.helpers module<a class="headerlink" href="#module-tdsxtract.helpers" title="Link to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="tdsxtract.helpers.fft">
+<span class="sig-prename descclassname"><span class="pre">tdsxtract.helpers.</span></span><span class="sig-name descname"><span class="pre">fft</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">time</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">signal</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tdsxtract/helpers.html#fft"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tdsxtract.helpers.fft" title="Link to this definition"></a></dt>
+<dd><p>Fourier transform.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>time</strong> (<em>array</em>) – The time points.</p></li>
+<li><p><strong>signal</strong> (<em>array</em>) – Signal amplitude.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>frequencies</strong> (<em>array</em>) – Frequencies (in Hz).</p></li>
+<li><p><strong>fourier_transform</strong> (<em>array</em>) – Fourier transform of the signal.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tdsxtract.helpers.get_epsilon_estimate">
+<span class="sig-prename descclassname"><span class="pre">tdsxtract.helpers.</span></span><span class="sig-name descname"><span class="pre">get_epsilon_estimate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">voltage_reference</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">voltage_sample</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sample_thickness</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tdsxtract/helpers.html#get_epsilon_estimate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tdsxtract.helpers.get_epsilon_estimate" title="Link to this definition"></a></dt>
+<dd><p>Get a rough estimate of the permittivity value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>voltage_reference</strong> (<em>array</em>) – Reference voltage.</p></li>
+<li><p><strong>voltage_sample</strong> (<em>array</em>) – Sample voltage.</p></li>
+<li><p><strong>time</strong> (<em>array</em>) – Time steps (in s).</p></li>
+<li><p><strong>sample_thickness</strong> (<em>float</em>) – Thickness of the sample (in m).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>epsilon_estimate</strong> – Permittivity estimate.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)">float</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tdsxtract.helpers.pos2time">
+<span class="sig-prename descclassname"><span class="pre">tdsxtract.helpers.</span></span><span class="sig-name descname"><span class="pre">pos2time</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">position</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tdsxtract/helpers.html#pos2time"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tdsxtract.helpers.pos2time" title="Link to this definition"></a></dt>
+<dd><p>Converts stage position to time shift.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>position</strong> (<em>array</em>) – The position of the stage (in m).</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Corresponding time shift (in s).</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>array</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>2*position since 2 paths of the laser are shifted on the delay stage</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tdsxtract.helpers.restrict">
+<span class="sig-prename descclassname"><span class="pre">tdsxtract.helpers.</span></span><span class="sig-name descname"><span class="pre">restrict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tdsxtract/helpers.html#restrict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tdsxtract.helpers.restrict" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tdsxtract.helpers.smooth">
+<span class="sig-prename descclassname"><span class="pre">tdsxtract.helpers.</span></span><span class="sig-name descname"><span class="pre">smooth</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cutoff</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.05</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">order</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tdsxtract/helpers.html#smooth"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tdsxtract.helpers.smooth" title="Link to this definition"></a></dt>
+<dd><p>Data smoothing.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<em>array</em>) – The data to smooth.</p></li>
+<li><p><strong>cutoff</strong> (<em>float</em>) – Filter cutoff frequency (the default is 0.05).</p></li>
+<li><p><strong>order</strong> (<em>int</em>) – Filter order (the default is 3).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>smooth_data</strong> – Smoothed data.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>array</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-tdsxtract.io">
+<span id="tdsxtract-io-module"></span><h2>tdsxtract.io module<a class="headerlink" href="#module-tdsxtract.io" title="Link to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="tdsxtract.io.load">
+<span class="sig-prename descclassname"><span class="pre">tdsxtract.io.</span></span><span class="sig-name descname"><span class="pre">load</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tdsxtract/io.html#load"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tdsxtract.io.load" title="Link to this definition"></a></dt>
+<dd><p>Load measurement data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>filename</strong> (<em>str</em>) – Name of the file to load.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>position</strong> (<em>array</em>) – position of the delay stage (in microns)</p></li>
+<li><p><strong>voltage</strong> (<em>array</em>) – signal amplitude (in mV).</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-tdsxtract.models">
+<span id="tdsxtract-models-module"></span><h2>tdsxtract.models module<a class="headerlink" href="#module-tdsxtract.models" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="tdsxtract.models.ColeCole">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">tdsxtract.models.</span></span><span class="sig-name descname"><span class="pre">ColeCole</span></span><a class="reference internal" href="../_modules/tdsxtract/models.html#ColeCole"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tdsxtract.models.ColeCole" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="tdsxtract.models.ColeCole.fit">
+<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">epsilon</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wavelengths</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bounds</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x0</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'de'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tdsxtract/models.html#ColeCole.fit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tdsxtract.models.ColeCole.fit" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tdsxtract.models.ColeCole.model">
+<span class="sig-name descname"><span class="pre">model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">omega</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eps_inf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eps_static</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tau</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tdsxtract/models.html#ColeCole.model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tdsxtract.models.ColeCole.model" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-tdsxtract.optim">
+<span id="tdsxtract-optim-module"></span><h2>tdsxtract.optim module<a class="headerlink" href="#module-tdsxtract.optim" title="Link to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="tdsxtract.optim.extract">
+<span class="sig-prename descclassname"><span class="pre">tdsxtract.optim.</span></span><span class="sig-name descname"><span class="pre">extract</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sample</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wavelengths</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t_exp</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">epsilon_initial_guess</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eps_re_min</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eps_re_max</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eps_im_min</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eps_im_max</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">thickness_tol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">opt_thickness</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weight</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tdsxtract/optim.html#extract"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tdsxtract.optim.extract" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tdsxtract.optim.sample_transmission">
+<span class="sig-prename descclassname"><span class="pre">tdsxtract.optim.</span></span><span class="sig-name descname"><span class="pre">sample_transmission</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">epsilons</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">thickness</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sample</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wavelengths</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tdsxtract/optim.html#sample_transmission"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tdsxtract.optim.sample_transmission" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</section>
+<section id="module-tdsxtract.stack">
+<span id="tdsxtract-stack-module"></span><h2>tdsxtract.stack module<a class="headerlink" href="#module-tdsxtract.stack" title="Link to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="tdsxtract.stack.get_coeffs_stack">
+<span class="sig-prename descclassname"><span class="pre">tdsxtract.stack.</span></span><span class="sig-name descname"><span class="pre">get_coeffs_stack</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tdsxtract/stack.html#get_coeffs_stack"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tdsxtract.stack.get_coeffs_stack" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tdsxtract.stack.get_transmission">
+<span class="sig-prename descclassname"><span class="pre">tdsxtract.stack.</span></span><span class="sig-name descname"><span class="pre">get_transmission</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sample</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lambda0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tdsxtract/stack.html#get_transmission"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tdsxtract.stack.get_transmission" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</section>
+<section id="module-tdsxtract">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-tdsxtract" title="Link to this heading"></a></h2>
+<p>Tools for extracting permittivity values from Terahertz Time Domain Spectroscopy measurements.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="modules.html" class="btn btn-neutral float-left" title="tdsxtract" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../idx.html" class="btn btn-neutral float-right" title="Indices and tables" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright Benjamin Vial 2020-2024.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,53 @@
+tdsxtract package
+=================
+
+Submodules
+----------
+
+tdsxtract.helpers module
+------------------------
+
+.. automodule:: tdsxtract.helpers
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+tdsxtract.io module
+-------------------
+
+.. automodule:: tdsxtract.io
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+tdsxtract.models module
+-----------------------
+
+.. automodule:: tdsxtract.models
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+tdsxtract.optim module
+----------------------
+
+.. automodule:: tdsxtract.optim
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+tdsxtract.stack module
+----------------------
+
+.. automodule:: tdsxtract.stack
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Module contents
+---------------
+
+.. automodule:: tdsxtract
+   :members:
+   :undoc-members:
+   :show-inheritance:

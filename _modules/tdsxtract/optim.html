@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>tdsxtract.optim &mdash; tdsxtract 0.3.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery.css?v=61a4c737" />
+      <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-binder.css?v=f4aeca0c" />
+      <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-dataframe.css?v=2082cf3c" />
+      <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=67c5d18b" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=e259d695"></script>
+        <script src="../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            tdsxtract
+              <img src="../../_static/tdsxtract.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Quickstart</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../quickstart.html">Installation</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Examples</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../auto_examples/index.html">Examples</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API reference:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../source/modules.html">tdsxtract</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../idx.html">Indices and tables</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">tdsxtract</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">tdsxtract.optim</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for tdsxtract.optim</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+<span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="c1"># Author: Benjamin Vial</span>
+<span class="c1"># License: MIT</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">npo</span>
+<span class="kn">from</span> <span class="nn">jax</span> <span class="kn">import</span> <span class="n">vmap</span>
+<span class="kn">from</span> <span class="nn">scipy.optimize</span> <span class="kn">import</span> <span class="n">minimize</span>
+
+<span class="kn">from</span> <span class="nn">.stack</span> <span class="kn">import</span> <span class="o">*</span>
+
+
+<div class="viewcode-block" id="sample_transmission">
+<a class="viewcode-back" href="../../source/tdsxtract.html#tdsxtract.optim.sample_transmission">[docs]</a>
+<span class="k">def</span> <span class="nf">sample_transmission</span><span class="p">(</span><span class="n">epsilons</span><span class="p">,</span> <span class="n">thickness</span><span class="p">,</span> <span class="n">sample</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">wavelengths</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="n">unknown</span> <span class="o">=</span> <span class="s2">&quot;unknown&quot;</span>
+    <span class="n">t</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">sample</span><span class="p">[</span><span class="n">unknown</span><span class="p">][</span><span class="s2">&quot;thickness&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">thickness</span>
+
+    <span class="k">def</span> <span class="nf">_t</span><span class="p">(</span><span class="n">params</span><span class="p">):</span>
+        <span class="n">lambda0</span><span class="p">,</span> <span class="n">eps</span> <span class="o">=</span> <span class="n">params</span>
+        <span class="n">sample</span><span class="p">[</span><span class="n">unknown</span><span class="p">][</span><span class="s2">&quot;epsilon&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">eps</span>
+        <span class="n">t</span> <span class="o">=</span> <span class="n">get_transmission</span><span class="p">(</span><span class="n">sample</span><span class="p">,</span> <span class="n">lambda0</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">t</span>
+
+    <span class="n">params</span> <span class="o">=</span> <span class="n">wavelengths</span><span class="p">,</span> <span class="n">epsilons</span>
+    <span class="n">t</span> <span class="o">=</span> <span class="n">vmap</span><span class="p">(</span><span class="n">_t</span><span class="p">)(</span><span class="n">params</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">t</span><span class="p">)</span></div>
+
+
+
+<span class="nd">@jit</span>
+<span class="k">def</span> <span class="nf">_fmini</span><span class="p">(</span>
+    <span class="n">x</span><span class="p">,</span>
+    <span class="n">sample</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">t_exp</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">wavelengths</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">weights</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+    <span class="n">opt_thickness</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="n">unknown</span> <span class="o">=</span> <span class="s2">&quot;unknown&quot;</span>
+    <span class="n">nl</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">wavelengths</span><span class="p">)</span>
+    <span class="n">thickness</span> <span class="o">=</span> <span class="n">sample</span><span class="p">[</span><span class="n">unknown</span><span class="p">][</span><span class="s2">&quot;thickness&quot;</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">opt_thickness</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">thickness</span> <span class="o">*=</span> <span class="n">x</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">sample</span><span class="p">[</span><span class="n">unknown</span><span class="p">][</span><span class="s2">&quot;thickness&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">thickness</span>
+        <span class="n">x_</span> <span class="o">=</span> <span class="n">x</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">x_</span> <span class="o">=</span> <span class="n">x</span>
+    <span class="n">epsilon</span> <span class="o">=</span> <span class="n">x_</span><span class="p">[:</span><span class="n">nl</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">x_</span><span class="p">[</span><span class="n">nl</span><span class="p">:]</span>
+    <span class="n">gamma</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">pi</span> <span class="o">/</span> <span class="n">wavelengths</span>
+    <span class="n">thickness_tot</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">k</span><span class="p">[</span><span class="s2">&quot;thickness&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">lay</span><span class="p">,</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">sample</span><span class="o">.</span><span class="n">items</span><span class="p">()]))</span>
+    <span class="n">phasor</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">gamma</span> <span class="o">*</span> <span class="n">thickness_tot</span><span class="p">)</span>
+    <span class="n">t_exp_phased</span> <span class="o">=</span> <span class="n">t_exp</span> <span class="o">*</span> <span class="n">phasor</span>
+
+    <span class="n">t_model</span> <span class="o">=</span> <span class="n">sample_transmission</span><span class="p">(</span>
+        <span class="n">epsilon</span><span class="p">,</span> <span class="n">thickness</span><span class="p">,</span> <span class="n">sample</span><span class="o">=</span><span class="n">sample</span><span class="p">,</span> <span class="n">wavelengths</span><span class="o">=</span><span class="n">wavelengths</span>
+    <span class="p">)</span>
+    <span class="n">mse_func</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">t_exp_phased</span> <span class="o">-</span> <span class="n">t_model</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span>
+    <span class="p">)</span>  <span class="c1"># / np.mean(np.abs(t_exp_phased) ** 2)</span>
+    <span class="c1"># epsmax,epsmin = np.max((epsilon)),np.min((epsilon))</span>
+    <span class="c1"># deps= np.abs(epsmax-epsmin)</span>
+    <span class="c1">#</span>
+    <span class="c1"># no = np.max(np.array([deps,1e-3]))</span>
+    <span class="c1"># mse_grad = np.mean(np.abs(np.gradient(epsilon) ) ** 2)/ no**2</span>
+    <span class="n">mse_grad</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">gradient</span><span class="p">(</span><span class="n">epsilon</span><span class="p">))</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">epsilon</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span>
+    <span class="p">)</span>  <span class="c1"># * np.mean(np.abs( freq/ epsilon)**2)</span>
+    <span class="n">mse</span> <span class="o">=</span> <span class="n">weights</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">mse_func</span> <span class="o">+</span> <span class="n">weights</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">mse_grad</span>
+
+    <span class="k">return</span> <span class="n">mse</span>
+
+
+<span class="n">_jit_gfunc</span> <span class="o">=</span> <span class="n">jit</span><span class="p">(</span><span class="n">grad</span><span class="p">(</span><span class="n">_fmini</span><span class="p">))</span>
+
+
+<span class="k">def</span> <span class="nf">_jac</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">npo</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">_jit_gfunc</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">))</span>
+
+
+<div class="viewcode-block" id="extract">
+<a class="viewcode-back" href="../../source/tdsxtract.html#tdsxtract.optim.extract">[docs]</a>
+<span class="k">def</span> <span class="nf">extract</span><span class="p">(</span>
+    <span class="n">sample</span><span class="p">,</span>
+    <span class="n">wavelengths</span><span class="p">,</span>
+    <span class="n">t_exp</span><span class="p">,</span>
+    <span class="n">epsilon_initial_guess</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">eps_re_min</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">eps_re_max</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">eps_im_min</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">eps_im_max</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">thickness_tol</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+    <span class="n">opt_thickness</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">weight</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+<span class="p">):</span>
+
+    <span class="n">h</span> <span class="o">=</span> <span class="n">sample</span><span class="p">[</span><span class="s2">&quot;unknown&quot;</span><span class="p">][</span><span class="s2">&quot;thickness&quot;</span><span class="p">]</span>
+    <span class="n">nl</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">wavelengths</span><span class="p">)</span>
+    <span class="n">ones</span> <span class="o">=</span> <span class="n">npo</span><span class="o">.</span><span class="n">ones_like</span><span class="p">(</span><span class="n">wavelengths</span><span class="p">)</span>
+
+    <span class="c1"># passiv = 1 - float(force_passive)</span>
+
+    <span class="k">if</span> <span class="n">epsilon_initial_guess</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">epsilon_initial_guess</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">+</span> <span class="mi">0</span><span class="n">j</span>
+    <span class="n">eps_re0</span> <span class="o">=</span> <span class="n">epsilon_initial_guess</span><span class="o">.</span><span class="n">real</span> <span class="o">*</span> <span class="n">ones</span>
+    <span class="n">eps_im0</span> <span class="o">=</span> <span class="n">epsilon_initial_guess</span><span class="o">.</span><span class="n">imag</span> <span class="o">*</span> <span class="n">ones</span>
+
+    <span class="n">eps_re_min</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">eps_re_min</span><span class="p">)</span> <span class="k">if</span> <span class="n">eps_re_min</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="kc">None</span>
+    <span class="n">eps_re_max</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">eps_re_max</span><span class="p">)</span> <span class="k">if</span> <span class="n">eps_re_max</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="kc">None</span>
+    <span class="n">eps_im_min</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">eps_im_min</span><span class="p">)</span> <span class="k">if</span> <span class="n">eps_im_min</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="kc">None</span>
+    <span class="n">eps_im_max</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">eps_im_max</span><span class="p">)</span> <span class="k">if</span> <span class="n">eps_im_max</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="kc">None</span>
+
+    <span class="n">hmin</span><span class="p">,</span> <span class="n">hmax</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">thickness_tol</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">thickness_tol</span><span class="p">)</span>
+    <span class="n">x0</span> <span class="o">=</span> <span class="p">[</span><span class="n">eps_re0</span><span class="p">,</span> <span class="n">eps_im0</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">opt_thickness</span><span class="p">:</span>
+        <span class="n">x0</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">initial_guess</span> <span class="o">=</span> <span class="n">npo</span><span class="o">.</span><span class="n">float64</span><span class="p">(</span><span class="n">npo</span><span class="o">.</span><span class="n">hstack</span><span class="p">(</span><span class="n">x0</span><span class="p">))</span>
+    <span class="n">bounds</span> <span class="o">=</span> <span class="p">[(</span><span class="n">eps_re_min</span><span class="p">,</span> <span class="n">eps_re_max</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nl</span><span class="p">)]</span>
+    <span class="n">bounds</span> <span class="o">+=</span> <span class="p">[(</span><span class="n">eps_im_min</span><span class="p">,</span> <span class="n">eps_im_max</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nl</span><span class="p">)]</span>
+    <span class="k">if</span> <span class="n">opt_thickness</span><span class="p">:</span>
+        <span class="n">bounds</span> <span class="o">+=</span> <span class="p">[(</span><span class="n">hmin</span><span class="p">,</span> <span class="n">hmax</span><span class="p">)]</span>
+    <span class="n">bounds</span> <span class="o">=</span> <span class="n">npo</span><span class="o">.</span><span class="n">float64</span><span class="p">(</span><span class="n">bounds</span><span class="p">)</span>
+
+    <span class="n">weights</span> <span class="o">=</span> <span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">weight</span><span class="p">),</span> <span class="nb">float</span><span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">weight</span><span class="p">))</span>
+
+    <span class="n">optthick</span> <span class="o">=</span> <span class="kc">True</span> <span class="k">if</span> <span class="n">opt_thickness</span> <span class="k">else</span> <span class="kc">None</span>
+
+    <span class="n">fmini_opt</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">_fmini</span><span class="p">(</span>
+        <span class="n">x</span><span class="p">,</span>
+        <span class="n">sample</span><span class="o">=</span><span class="n">sample</span><span class="p">,</span>
+        <span class="n">weights</span><span class="o">=</span><span class="n">weights</span><span class="p">,</span>
+        <span class="n">t_exp</span><span class="o">=</span><span class="n">t_exp</span><span class="p">,</span>
+        <span class="n">wavelengths</span><span class="o">=</span><span class="n">wavelengths</span><span class="p">,</span>
+        <span class="n">opt_thickness</span><span class="o">=</span><span class="n">optthick</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">jac_opt</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">_jac</span><span class="p">(</span>
+        <span class="n">x</span><span class="p">,</span>
+        <span class="n">sample</span><span class="o">=</span><span class="n">sample</span><span class="p">,</span>
+        <span class="n">weights</span><span class="o">=</span><span class="n">weights</span><span class="p">,</span>
+        <span class="n">t_exp</span><span class="o">=</span><span class="n">t_exp</span><span class="p">,</span>
+        <span class="n">wavelengths</span><span class="o">=</span><span class="n">wavelengths</span><span class="p">,</span>
+        <span class="n">opt_thickness</span><span class="o">=</span><span class="n">optthick</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">options</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;disp&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="s2">&quot;maxcor&quot;</span><span class="p">:</span> <span class="mi">250</span><span class="p">,</span>
+        <span class="s2">&quot;ftol&quot;</span><span class="p">:</span> <span class="mf">1e-16</span><span class="p">,</span>
+        <span class="s2">&quot;gtol&quot;</span><span class="p">:</span> <span class="mf">1e-16</span><span class="p">,</span>
+        <span class="s2">&quot;eps&quot;</span><span class="p">:</span> <span class="mf">1e-11</span><span class="p">,</span>
+        <span class="s2">&quot;maxfun&quot;</span><span class="p">:</span> <span class="mi">15000</span><span class="p">,</span>
+        <span class="s2">&quot;maxiter&quot;</span><span class="p">:</span> <span class="mi">15000</span><span class="p">,</span>
+        <span class="s2">&quot;iprint&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="s2">&quot;maxls&quot;</span><span class="p">:</span> <span class="mi">200</span><span class="p">,</span>
+        <span class="s2">&quot;finite_diff_rel_step&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">}</span>
+
+    <span class="n">opt</span> <span class="o">=</span> <span class="n">minimize</span><span class="p">(</span>
+        <span class="n">fmini_opt</span><span class="p">,</span>
+        <span class="n">initial_guess</span><span class="p">,</span>
+        <span class="n">bounds</span><span class="o">=</span><span class="n">bounds</span><span class="p">,</span>
+        <span class="n">tol</span><span class="o">=</span><span class="mf">1e-16</span><span class="p">,</span>
+        <span class="n">options</span><span class="o">=</span><span class="n">options</span><span class="p">,</span>
+        <span class="n">jac</span><span class="o">=</span><span class="n">jac_opt</span><span class="p">,</span>
+        <span class="n">method</span><span class="o">=</span><span class="s2">&quot;L-BFGS-B&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="k">if</span> <span class="n">opt_thickness</span><span class="p">:</span>
+        <span class="n">h_opt</span> <span class="o">=</span> <span class="n">opt</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">h</span>
+        <span class="n">_epsopt</span> <span class="o">=</span> <span class="n">opt</span><span class="o">.</span><span class="n">x</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">h_opt</span> <span class="o">=</span> <span class="n">h</span>
+        <span class="n">_epsopt</span> <span class="o">=</span> <span class="n">opt</span><span class="o">.</span><span class="n">x</span>
+
+    <span class="n">epsilon_opt</span> <span class="o">=</span> <span class="n">_epsopt</span><span class="p">[:</span><span class="n">nl</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">_epsopt</span><span class="p">[</span><span class="n">nl</span><span class="p">:]</span>
+    <span class="k">return</span> <span class="n">epsilon_opt</span><span class="p">,</span> <span class="n">h_opt</span><span class="p">,</span> <span class="n">opt</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright Benjamin Vial 2020-2024.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
