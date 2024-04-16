@@ -19,13 +19,13 @@ sys.path.insert(0, os.path.abspath("../"))
 # -- Project information -----------------------------------------------------
 
 import tdsxtract as tx
-
+import datetime
 project = tx.__name__
-copyright = tx.__copyright__
 author = tx.__author__
-
 # The full version, including alpha/beta/rc tags
 release = tx.__version__
+copyright = f"{author} 2020-{datetime.date.today().year}"
+
 
 
 # -- General configuration ---------------------------------------------------

@@ -66,10 +66,10 @@ req: testenv
 
 ## Install Python dependencies for dev and test
 dev:
-	$(PYTHON_INTERPRETER) -m pip install -r requirements-dev.txt
+	$(PYTHON_INTERPRETER) -m pip install -e .[dev]
 	
 
-install: dev
+install:
 	pip install -e .
 
 
