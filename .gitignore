@@ -85,6 +85,7 @@ auto_examples/
 .pytest_cache/
 .hypothesis/
 .coverage
+coverage.xml
 htmlcov/
 
 
