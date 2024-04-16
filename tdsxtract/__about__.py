@@ -1,7 +1,3 @@
-
-
-
-
 try:
     # Python 3.8
     import importlib.metadata as metadata
@@ -24,4 +20,3 @@ def get_meta(metadata):
 
 
 __version__, __author__, __description__, data = get_meta(metadata)
-

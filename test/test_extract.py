@@ -29,7 +29,7 @@ def test():
     if padding:
         # padding
         expo_fft = 10
-        extra0s = 2 ** (expo_fft + 3) - 2 ** expo_fft
+        extra0s = 2 ** (expo_fft + 3) - 2**expo_fft
         dx = position[1] - position[0]
         extra_position = position[-1] + npo.cumsum(npo.ones(extra0s) * dx)
 

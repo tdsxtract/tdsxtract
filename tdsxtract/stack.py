@@ -87,9 +87,7 @@ def get_coeffs_stack(config):
             ]
         )
 
-    gamma = [
-        np.sqrt(k0 ** 2 * e * m - alpha0 ** 2 - beta0 ** 2) for e, m in zip(eps, mu)
-    ]
+    gamma = [np.sqrt(k0**2 * e * m - alpha0**2 - beta0**2) for e, m in zip(eps, mu)]
     B = [_matrix_B(e, m) for e, m in zip(eps, mu)]
     M = [inv(b) for b in B]
     Pi = [_matrix_pi(m, g) for m, g in zip(M, gamma)]
@@ -164,8 +162,8 @@ def get_coeffs_stack(config):
         1.0
         / gamma[0] ** 2
         * (
-            (gamma[0] ** 2 + alpha0 ** 2) * abs(phi[0][1]) ** 2
-            + (gamma[0] ** 2 + beta0 ** 2) * abs(phi[0][3]) ** 2
+            (gamma[0] ** 2 + alpha0**2) * abs(phi[0][1]) ** 2
+            + (gamma[0] ** 2 + beta0**2) * abs(phi[0][3]) ** 2
             + 2 * alpha0 * beta0 * np.real(phi[0][1] * phi[0][3].conjugate())
         )
     )
@@ -173,8 +171,8 @@ def get_coeffs_stack(config):
         1.0
         / (gamma[0] * gamma[-1] * mu[-1])
         * (
-            (gamma[-1] ** 2 + alpha0 ** 2) * abs(phi[-1][0]) ** 2
-            + (gamma[-1] ** 2 + beta0 ** 2) * abs(phi[-1][2]) ** 2
+            (gamma[-1] ** 2 + alpha0**2) * abs(phi[-1][0]) ** 2
+            + (gamma[-1] ** 2 + beta0**2) * abs(phi[-1][2]) ** 2
             + 2 * alpha0 * beta0 * np.real(phi[-1][0] * phi[-1][2].conjugate())
         )
     )
