@@ -6,24 +6,21 @@ on:
     branches: [ main ]
  
 jobs:
- 
   build_docs_job:
     runs-on: ubuntu-latest
-    # container: debian:buster-slim
- 
     steps:
- 
-    - name: Prereqs
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      run: |
-        sudo apt-get update && sudo apt-get install -y git rsync make
-        git clone --depth 1 "https://token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" .
-        pip install .
-      shell: bash
- 
-    - name: Execute script to build our documentation and update pages
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      run: "doc/build.sh"
-      shell: bash
+      - uses: actions/checkout@v2
+      - name: Install dependencies
+        uses: actions/setup-python@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          sudo apt-get update && sudo apt-get install -y git rsync make
+          git clone --depth 1 "https://token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" .
+          pip install .
+        shell: bash
+      - name: Execute script to build our documentation and update pages
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: "doc/build.sh"
+        shell: bash
